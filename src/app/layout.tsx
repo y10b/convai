@@ -51,6 +51,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="google-adsense-account" content="ca-pub-1379539108387521" />
         <link rel="canonical" href="https://convai.app" />
       </head>
       <body className={`${notoSansKR.variable} font-sans antialiased`}>
