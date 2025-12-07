@@ -1,39 +1,39 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 interface AdBannerProps {
   className?: string;
 }
 
 export default function AdBanner({ className = "" }: AdBannerProps) {
-  return (
-    <div className={`w-full ${className}`}>
-      {/* 카카오 애드핏 배너 영역 */}
-      {/* 실제 배포 시 카카오 애드핏 스크립트로 교체 */}
-      <div
-        className="w-full h-[50px] bg-[var(--color-surface)] rounded-lg flex items-center justify-center"
-        role="complementary"
-        aria-label="광고"
-      >
-        <p className="text-[12px] text-[var(--color-text-tertiary)]">
-          광고 영역
-        </p>
-      </div>
+  const adRef = useRef<HTMLDivElement>(null);
+  const isLoaded = useRef(false);
 
-      {/*
-        실제 카카오 애드핏 코드:
-        <ins
-          class="kakao_ad_area"
-          style="display:none;"
-          data-ad-unit="YOUR_AD_UNIT_ID"
-          data-ad-width="320"
-          data-ad-height="50"
-        ></ins>
-        <script
-          type="text/javascript"
-          src="//t1.daumcdn.net/kas/static/ba.min.js"
-          async
-        ></script>
-      */}
+  useEffect(() => {
+    if (isLoaded.current) return;
+    isLoaded.current = true;
+
+    // 스크립트가 이미 있는지 확인
+    if (!document.getElementById("kakao-adfit-script")) {
+      const script = document.createElement("script");
+      script.id = "kakao-adfit-script";
+      script.type = "text/javascript";
+      script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <div className={`w-full ${className}`} ref={adRef}>
+      <ins
+        className="kakao_ad_area"
+        style={{ display: "none" }}
+        data-ad-unit="DAN-15cwefZ3EXH6d7aW"
+        data-ad-width="320"
+        data-ad-height="100"
+      />
     </div>
   );
 }
